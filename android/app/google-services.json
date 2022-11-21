@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "193195765513",
+    "project_id": "pollafutbolera-9c9c5",
+    "storage_bucket": "pollafutbolera-9c9c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193195765513:android:c98ff8f537e50bcf28edd8",
+        "android_client_info": {
+          "package_name": "co.devpaul.polla_futbolera"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193195765513-i536hlg3bq0nlg1fugo4l89939e058j2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2ObB_n1wFYZa8T2CKHFYVraZacMErVww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193195765513-i536hlg3bq0nlg1fugo4l89939e058j2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "193195765513-g7n2v9f2npr4o429lk1np489be7vd7pk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pollaFutbolera"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
