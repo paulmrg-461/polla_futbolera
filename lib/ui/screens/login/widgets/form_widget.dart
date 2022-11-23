@@ -150,7 +150,7 @@ class _FormWidgetState extends State<FormWidget> {
         email: _emailController.text.trim().toLowerCase(),
         password: _emailController.text);
     if (loginResponse == 'Login success!') {
-      print(loginResponse);
+      Navigator.pushReplacementNamed(context, 'home_screen');
     } else {
       CustomAlertDialog().showCustomDialog(
           context: context,

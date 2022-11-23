@@ -29,8 +29,8 @@ class CustomButton extends StatelessWidget {
       this.borderRadius = 26,
       this.borderColor = MainTheme.primaryColor,
       this.buttonElevation = 0,
-      this.internalHorizontalPadding = 8,
-      this.internalVerticalPadding = 8})
+      this.internalHorizontalPadding = 16,
+      this.internalVerticalPadding = 10})
       : super(key: key);
 
   @override

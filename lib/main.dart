@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:polla_futbolera/data/services/user/shared_preferences_service.dart';
 import 'package:polla_futbolera/domain/services/firebase/firebase_options.dart';
-import 'package:polla_futbolera/ui/screens/login/login_screen.dart';
+import 'package:polla_futbolera/ui/routes/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Polla Futbolera', home: LoginScreen());
+    return MaterialApp(
+      initialRoute: AppRoutes.initialRoute,
+      routes: AppRoutes.routes,
+    );
   }
 }
