@@ -20,8 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FadeInUp(
-      duration: const Duration(milliseconds: 500),
+        body: BounceInUp(
+      duration: const Duration(milliseconds: 1600),
       controller: (controller) => _animationControllerForm = controller,
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 26),
