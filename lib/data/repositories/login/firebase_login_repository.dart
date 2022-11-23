@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:polla_futbolera/data/services/api_world_cup/api_world_cup_login_service.dart';
 import 'package:polla_futbolera/data/services/user/shared_preferences_service.dart';
 import 'package:polla_futbolera/domain/repositories/login/abstract_login_repository.dart';
 
 class FirebaseLoginRepository extends AbstractLoginRepository {
   FirebaseAuth auth = FirebaseAuth.instance;
+  ApiWorldCupLoginService apiWorldCupLoginService = ApiWorldCupLoginService();
 
   @override
   Future<String> doLogin(
@@ -12,6 +14,8 @@ class FirebaseLoginRepository extends AbstractLoginRepository {
       final UserCredential userCredential =
           await auth.signInWithEmailAndPassword(email: email, password: email);
       // final UserEntity userEntity = UserEntity.fromJson(userCredential.user!);
+      apiWorldCupLoginService.doLoginApiWorldCup(
+          email: 'co.devpaul@gmail.com', password: 'Admin123-');
       //Save token SharedPreferences
       String token = await userCredential.user!.getIdToken();
       SharedPreferencesService.token = token;
