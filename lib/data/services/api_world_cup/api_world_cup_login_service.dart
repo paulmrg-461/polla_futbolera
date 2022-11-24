@@ -11,8 +11,6 @@ class ApiWorldCupLoginService extends AbstractApiWorldCupLoginService {
         '${Enviroment.freeApiWorldCupBaseUrl}user/login',
         data: {"email": email, "password": password},
         options: Options(headers: {"Content-Type": "application/json"}));
-    print(response);
-    print(response.data);
-    return '';
+    return response.data['data']['token'];
   }
 }

@@ -1,4 +1,4 @@
 abstract class AbstractApiWorldCupSignUpService {
-  Future<String> doLSignUpApiWorldCup(
+  Future<String> doSignUpApiWorldCup(
       {required String email, required String password, required String name});
 }

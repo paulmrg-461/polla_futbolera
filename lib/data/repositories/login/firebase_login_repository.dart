@@ -14,11 +14,12 @@ class FirebaseLoginRepository extends AbstractLoginRepository {
       final UserCredential userCredential =
           await auth.signInWithEmailAndPassword(email: email, password: email);
       // final UserEntity userEntity = UserEntity.fromJson(userCredential.user!);
-      apiWorldCupLoginService.doLoginApiWorldCup(
-          email: 'co.devpaul@gmail.com', password: 'Admin123-');
+      final String apiWorldCupToken = await apiWorldCupLoginService
+          .doLoginApiWorldCup(email: email, password: 'Admin123-');
+      final String token = await userCredential.user!.getIdToken();
       //Save token SharedPreferences
-      String token = await userCredential.user!.getIdToken();
       SharedPreferencesService.token = token;
+      SharedPreferencesService.apiWorldCupToken = apiWorldCupToken;
 
       return 'Login success!';
     } on FirebaseAuthException catch (e) {

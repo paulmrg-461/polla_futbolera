@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:polla_futbolera/data/services/api_world_cup/api_world_cup_Signup_service.dart';
 import 'package:polla_futbolera/domain/repositories/signup/abstract_signup_repository.dart';
 
 class FirebaseSignUpRepository extends AbstractSignUpRepository {
   FirebaseAuth auth = FirebaseAuth.instance;
-
+  ApiWorldCupSignUpService apiWorldCupSignUpService =
+      ApiWorldCupSignUpService();
   @override
   Future<String> doSignUp(
       {required String email,
@@ -20,6 +22,9 @@ class FirebaseSignUpRepository extends AbstractSignUpRepository {
       // final UserEntity userEntity = UserEntity.fromJson(user!);
 
       await user?.sendEmailVerification();
+
+      await apiWorldCupSignUpService.doSignUpApiWorldCup(
+          email: email, password: 'Admin123-', name: name);
 
       return 'Sign up success!';
     } on FirebaseAuthException catch (e) {
