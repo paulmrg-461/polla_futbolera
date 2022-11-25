@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
+import 'package:polla_futbolera/data/services/firestore/match/match_firestore_service.dart';
 import 'package:polla_futbolera/data/services/user/shared_preferences_service.dart';
 import 'package:polla_futbolera/domain/entities/match_entity.dart';
 import 'package:polla_futbolera/global/enviroment.dart';
@@ -12,15 +11,17 @@ class ApiWordCupRequestsService {
     "Authorization": "Bearer ${SharedPreferencesService.apiWorldCupToken}"
   });
 
-  static Future<List<MatchEntity>> getScores() async {
+  static Future<void> uploadNewScoresToFirestore() async {
     final Response response = await dio
         .get('${Enviroment.freeApiWorldCupBaseUrl}match', options: options);
-
     if (response.data['status'] == 'success') {
       final Iterable list = response.data['data'];
-      return list.map((match) => MatchEntity.fromJson(match)).toList();
-    } else {
-      return [];
+      list.forEach((match) async {
+        final MatchEntity matchEntity = MatchEntity.fromJson(match);
+        // if (matchEntity.finished!) {
+        await MatchFirestoreService.insertNewMatchesToFirestore(matchEntity);
+        // }
+      });
     }
   }
 }

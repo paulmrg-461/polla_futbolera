@@ -3,7 +3,7 @@ class MatchEntity {
   int? awayScore;
   List<String>? awayScorers;
   String? awayTeamId;
-  String? finished;
+  bool? finished;
   String? group;
   int? homeScore;
   List<String>? homeScorers;
@@ -51,7 +51,7 @@ class MatchEntity {
     awayScore = json['away_score'];
     awayScorers = json['away_scorers'].cast<String>();
     awayTeamId = json['away_team_id'];
-    finished = json['finished'];
+    finished = json['finished'] == 'TRUE' ? true : false;
     group = json['group'];
     homeScore = json['home_score'];
     homeScorers = json['home_scorers'].cast<String>();
