@@ -35,35 +35,46 @@ class HomeScreen extends StatelessWidget {
                   return match;
                 }).toList();
 
-                final List<Row> widgetList = matchesList
-                    .map((match) => Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 22,
-                              height: 18,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(match.homeFlag!))),
-                            ),
-                            // Text(match.homeTeamEn!),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child:
-                                  Text('${match.homeScore}-${match.awayScore}'),
-                            ),
-                            // Text(match.awayTeamEn!),
-                            Container(
-                              width: 22,
-                              height: 18,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(match.awayFlag!))),
-                            ),
-                          ],
+                final List<Padding> widgetList = matchesList
+                    .map((match) => Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                  child: Text(
+                                match.homeTeamEn!,
+                                textAlign: TextAlign.right,
+                              )),
+                              Container(
+                                width: 22,
+                                height: 18,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(match.homeFlag!))),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                    '${match.homeScore}-${match.awayScore}'),
+                              ),
+                              Container(
+                                width: 22,
+                                height: 18,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(match.awayFlag!))),
+                              ),
+                              Expanded(
+                                  child: Text(
+                                match.awayTeamEn!,
+                                textAlign: TextAlign.left,
+                              )),
+                            ],
+                          ),
                         ))
                     .toList();
 
