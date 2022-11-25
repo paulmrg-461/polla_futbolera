@@ -11,4 +11,12 @@ class MatchFirestoreService {
           .set(matchEntity.toJson())
           .then((value) => true)
           .catchError((err) => false);
+
+  static Stream<QuerySnapshot<MatchEntity>> getFinishedMatches() => matches
+      .where('finished', isEqualTo: true)
+      .withConverter<MatchEntity>(
+          fromFirestore: (snapshot, _) =>
+              MatchEntity.fromJson(snapshot.data()!),
+          toFirestore: (matches, _) => matches.toJson())
+      .snapshots();
 }

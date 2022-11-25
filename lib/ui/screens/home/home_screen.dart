@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:polla_futbolera/data/services/api_world_cup/api_world_cup_requests_service.dart';
+import 'package:polla_futbolera/data/services/firestore/match/match_firestore_service.dart';
 import 'package:polla_futbolera/domain/entities/match_entity.dart';
+import 'package:polla_futbolera/ui/shared/custom_error_message.dart';
+import 'package:polla_futbolera/ui/themes/main_theme.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,33 +18,66 @@ class HomeScreen extends StatelessWidget {
                   ApiWordCupRequestsService.uploadNewScoresToFirestore(),
               icon: const Icon(Icons.cloud_upload_rounded))
         ]),
-        body: Text('TOla')
-        // FutureBuilder<List<MatchEntity>>(
-        //     future: ApiWordCupRequestsService.getScores(),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasData) {
-        //         return ListView.builder(
-        //           itemCount: snapshot.data!.length,
-        //           itemBuilder: (context, index) {
-        //             final MatchEntity match = snapshot.data![index];
-        //             return Row(
-        //               mainAxisAlignment: MainAxisAlignment.center,
-        //               children: [
-        //                 Text(match.homeTeamEn!),
-        //                 Text('${match.homeScore} - ${match.awayScore}'),
-        //                 Text(match.awayTeamEn!),
-        //               ],
-        //             );
-        //           },
-        //         );
-        //       }
-        //       if (snapshot.hasError) {
-        //         return Center(
-        //           child: Text('Ha ocurrido un error al traer los marcadores.'),
-        //         );
-        //       }
-        //       return const Center(child: CircularProgressIndicator.adaptive());
-        //     }),
-        );
+        body: StreamBuilder(
+            stream: MatchFirestoreService.getFinishedMatches(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot<MatchEntity>> snapshot) {
+              if (snapshot.hasError) {
+                return const CustomErrorMessage(
+                    textMessage:
+                        'Ha ocurrido un error al cargar las resultados. Por favor intenta nuevamente.');
+              }
+
+              if (snapshot.hasData) {
+                final List<MatchEntity> matchesList = snapshot.data!.docs
+                    .map((DocumentSnapshot<MatchEntity> document) {
+                  final MatchEntity match = document.data()!;
+                  return match;
+                }).toList();
+
+                final List<Row> widgetList = matchesList
+                    .map((match) => Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 22,
+                              height: 18,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(match.homeFlag!))),
+                            ),
+                            // Text(match.homeTeamEn!),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child:
+                                  Text('${match.homeScore}-${match.awayScore}'),
+                            ),
+                            // Text(match.awayTeamEn!),
+                            Container(
+                              width: 22,
+                              height: 18,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(match.awayFlag!))),
+                            ),
+                          ],
+                        ))
+                    .toList();
+
+                return SingleChildScrollView(
+                  child: Column(
+                    children: widgetList,
+                  ),
+                );
+              }
+
+              return const Center(
+                  child: CircularProgressIndicator.adaptive(
+                backgroundColor: MainTheme.primaryColor,
+              ));
+            }));
   }
 }

@@ -18,9 +18,7 @@ class ApiWordCupRequestsService {
       final Iterable list = response.data['data'];
       list.forEach((match) async {
         final MatchEntity matchEntity = MatchEntity.fromJson(match);
-        // if (matchEntity.finished!) {
         await MatchFirestoreService.insertNewMatchesToFirestore(matchEntity);
-        // }
       });
     }
   }
